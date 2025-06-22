@@ -4,26 +4,82 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Viral Vibe</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f2f2f2;
+    }
+    header {
+      background: #e53935;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    .video {
+      background: white;
+      margin: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    iframe {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .btn {
+      margin-top: 0.5rem;
+      display: inline-block;
+      background: #e53935;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+  </style>
 </head>
-<body style="font-family:sans-serif;text-align:center;background:#f2f2f2;padding:20px">
-  <h1>📺 Viral Vibe</h1>
-  <input type="text" placeholder="🔍 Search video..." onkeyup="search()" id="search" />
-  <div id="videoList">
-    <div class="video" data-category="Drama">
-      <h3>Sample Drama Video</h3>
-      <iframe width="300" height="200" src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
-      <br />
-      <a href="https://t.me/viralvibe3" target="_blank"><button>Join Now</button></a>
-    </div>
-  </div>
-  <script>
-    function search() {
-      const input = document.getElementById('search').value.toLowerCase();
-      const videos = document.querySelectorAll('.video');
-      videos.forEach(v => {
-        v.style.display = v.textContent.toLowerCase().includes(input) ? 'block' : 'none';
+<body>
+  <header>Viral Vibe 🎬</header>
+
+  <div id="video-list"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBPoIAY5YKiqgH4JO8cMkaDY8u0CLUOogM",
+      authDomain: "viral-vibe-64304.firebaseapp.com",
+      projectId: "viral-vibe-64304",
+      storageBucket: "viral-vibe-64304.firebasestorage.app",
+      messagingSenderId: "900949139275",
+      appId: "1:900949139275:web:3c7dab9cddc3c8db18d2ce",
+      measurementId: "G-BKRDRZPCFZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const videoList = document.getElementById("video-list");
+
+    async function loadVideos() {
+      const querySnapshot = await getDocs(collection(db, "videos"));
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.className = "video";
+        div.innerHTML = `
+          <h3>${data.title}</h3>
+          <iframe src="${data.link}" frameborder="0" allowfullscreen></iframe>
+          <br>
+          <a class="btn" href="https://t.me/viralvibe3" target="_blank">Join Now</a>
+        `;
+        videoList.appendChild(div);
       });
     }
+
+    loadVideos();
   </script>
 </body>
 </html>
