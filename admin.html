@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel - Viral Vibe</title>
+</head>
+<body style="text-align:center;padding:30px">
+  <h2>🔐 Admin Login</h2>
+  <input id="user" placeholder="Username"><br><br>
+  <input id="pass" type="password" placeholder="Password"><br><br>
+  <button onclick="login()">Login</button>
+  <div id="panel" style="display:none">
+    <h3>Add New Video</h3>
+    <input id="title" placeholder="Video Title"><br><br>
+    <input id="link" placeholder="YouTube Embed Link"><br><br>
+    <input id="category" placeholder="Category (Drama, Funny...)"><br><br>
+    <button onclick="alert('Not connected to backend')">Upload</button>
+  </div>
+  <script>
+    function login() {
+      const u = document.getElementById('user').value;
+      const p = document.getElementById('pass').value;
+      if(u === 'Aponbro33' && p === 'aponbro3333') {
+        document.getElementById('panel').style.display = 'block';
+      } else {
+        alert('Wrong credentials!');
+      }
+    }
+  </script>
+</body>
+</html>
