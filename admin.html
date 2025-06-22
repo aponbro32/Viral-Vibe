@@ -1,269 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Viral Vibe Admin Panel</title>
-<style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #121212;
-    color: #eee;
-    margin: 0; padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  header {
-    background: #1f1f1f;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  header h1 {
-    margin: 0; font-size: 1.5rem;
-    color: #ff5722;
-  }
-  main {
-    flex-grow: 1;
-    padding: 2rem;
-    max-width: 700px;
-    margin: auto;
-    width: 100%;
-  }
-  form {
-    background: #1f1f1f;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #ff5722aa;
-    margin-bottom: 2rem;
-  }
-  label {
-    display: block;
-    margin-bottom: 0.3rem;
-    font-weight: 600;
-  }
-  input, select {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  button {
-    background: #ff5722;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background 0.3s ease;
-  }
-  button:hover {
-    background: #e64a19;
-  }
-  .video-list {
-    background: #1f1f1f;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 0 10px #ff5722aa;
-  }
-  .video-item {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #333;
-  }
-  .video-item:last-child {
-    border-bottom: none;
-  }
-  .logout-btn {
-    background: transparent;
-    border: 1px solid #ff5722;
-    color: #ff5722;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  .logout-btn:hover {
-    background: #ff5722;
-    color: #fff;
-  }
-  #user-info {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  #user-info img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Viral Vibe Admin Panel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: #121212;
+      color: #eee;
+    }
+    header {
+      background: #1e1e1e;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      color: #ff5722;
+      margin: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ff572280;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      padding: 0.6rem 1.5rem;
+      background-color: #ff5722;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e64a19;
+    }
+    .video-list {
+      margin-top: 2rem;
+    }
+    .video-item {
+      border-bottom: 1px solid #333;
+      padding: 1rem 0;
+    }
+    .auth-btns {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .user-info {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .user-info img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+  </style>
 </head>
 <body>
 
 <header>
-  <h1>Viral Vibe Admin Panel</h1>
-  <div id="user-info" style="display:none;">
-    <img id="user-pic" src="" alt="User Picture" />
-    <span id="user-name"></span>
-    <button class="logout-btn" id="sign-out-btn">Logout</button>
+  <h1>Viral Vibe Admin</h1>
+  <div class="auth-btns">
+    <div id="user-section" class="user-info" style="display:none;">
+      <img id="user-pic" src="" alt="User" />
+      <span id="user-name"></span>
+      <button id="logout-btn">Logout</button>
+    </div>
+    <button id="login-btn">Sign in with Google</button>
   </div>
-  <button id="google-signin-btn">Sign in with Google</button>
 </header>
 
-<main style="display:none;">
+<div class="container" style="display:none;" id="main-panel">
   <form id="video-form">
     <label for="title">Video Title</label>
-    <input type="text" id="title" required placeholder="Enter video title" />
+    <input type="text" id="title" placeholder="Enter video title" required />
 
     <label for="category">Category</label>
     <select id="category" required>
       <option value="">Select category</option>
-      <option value="Music">Music</option>
-      <option value="Education">Education</option>
-      <option value="Gaming">Gaming</option>
-      <option value="News">News</option>
-      <option value="Comedy">Comedy</option>
-      <option value="Other">Other</option>
+      <option>Music</option>
+      <option>Education</option>
+      <option>Gaming</option>
+      <option>News</option>
+      <option>Comedy</option>
+      <option>Other</option>
     </select>
 
     <label for="videoUrl">Video URL</label>
-    <input type="url" id="videoUrl" required placeholder="https://example.com/video.mp4" />
+    <input type="url" id="videoUrl" placeholder="https://..." required />
 
     <button type="submit">Add Video</button>
   </form>
 
-  <section class="video-list" id="video-list">
+  <div class="video-list" id="video-list">
     <h2>Uploaded Videos</h2>
-    <div id="videos-container">Loading videos...</div>
-  </section>
-</main>
+    <div id="videos-container">Loading...</div>
+  </div>
+</div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
   import {
-    getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp
+    getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
   import {
-    getAuth, signInWithPopup, GoogleAuthProvider,
-    onAuthStateChanged, signOut
+    getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut
   } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-  // Firebase config — তোমার Firebase Config এখানে বসাও
   const firebaseConfig = {
-    apiKey: "AIzaSyBoAO8XwePthm7SeRUOaFStfoIsWiBHVWg",
-    authDomain: "viral-vibe-c6df6.firebaseapp.com",
-    projectId: "viral-vibe-c6df6",
-    storageBucket: "viral-vibe-c6df6.appspot.com",
-    messagingSenderId: "46382892567",
-    appId: "1:46382892567:web:13a7986c054aad34cb3e52",
+    apiKey: "AIzaSyBPoIAY5YKiqgH4JO8cMkaDY8u0CLUOogM",
+    authDomain: "viral-vibe-64304.firebaseapp.com",
+    projectId: "viral-vibe-64304",
+    storageBucket: "viral-vibe-64304.appspot.com",
+    messagingSenderId: "900949139275",
+    appId: "1:900949139275:web:3c7dab9cddc3c8db18d2ce"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  // DOM Elements
-  const signInBtn = document.getElementById("google-signin-btn");
-  const signOutBtn = document.getElementById("sign-out-btn");
-  const userInfoDiv = document.getElementById("user-info");
+  const loginBtn = document.getElementById("login-btn");
+  const logoutBtn = document.getElementById("logout-btn");
+  const userSection = document.getElementById("user-section");
   const userPic = document.getElementById("user-pic");
   const userName = document.getElementById("user-name");
-  const mainContent = document.querySelector("main");
+  const mainPanel = document.getElementById("main-panel");
   const videoForm = document.getElementById("video-form");
   const videosContainer = document.getElementById("videos-container");
 
-  // Sign in with Google
-  signInBtn.addEventListener("click", () => {
-    signInWithPopup(auth, provider).catch((error) => {
-      alert("Login failed: " + error.message);
-    });
-  });
+  loginBtn.onclick = () => signInWithPopup(auth, provider).catch(err => alert(err.message));
+  logoutBtn.onclick = () => signOut(auth);
 
-  // Sign out
-  signOutBtn.addEventListener("click", () => {
-    signOut(auth);
-  });
-
-  // Auth state listener
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, user => {
     if (user) {
-      // Logged in
-      signInBtn.style.display = "none";
-      userInfoDiv.style.display = "flex";
-      mainContent.style.display = "block";
-
+      loginBtn.style.display = "none";
+      userSection.style.display = "flex";
+      mainPanel.style.display = "block";
       userPic.src = user.photoURL;
       userName.textContent = user.displayName;
-
       loadVideos();
     } else {
-      // Logged out
-      signInBtn.style.display = "block";
-      userInfoDiv.style.display = "none";
-      mainContent.style.display = "none";
-      videosContainer.innerHTML = "Please login to see videos.";
+      loginBtn.style.display = "block";
+      userSection.style.display = "none";
+      mainPanel.style.display = "none";
     }
   });
 
-  // Load videos from Firestore and display
+  videoForm.onsubmit = async e => {
+    e.preventDefault();
+    const title = title.value.trim();
+    const category = category.value;
+    const videoUrl = videoUrl.value.trim();
+    if (!title || !category || !videoUrl) return alert("Fill all fields");
+
+    await addDoc(collection(db, "videos"), {
+      title, category, videoUrl, createdAt: serverTimestamp()
+    });
+    alert("Video added!");
+    videoForm.reset();
+    loadVideos();
+  };
+
   async function loadVideos() {
-    videosContainer.innerHTML = "Loading videos...";
-    try {
-      const videosCol = collection(db, "videos");
-      const q = query(videosCol, orderBy("createdAt", "desc"));
-      const snapshot = await getDocs(q);
+    videosContainer.innerHTML = "Loading...";
+    const q = query(collection(db, "videos"), orderBy("createdAt", "desc"));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) return videosContainer.innerHTML = "No videos found";
 
-      if (snapshot.empty) {
-        videosContainer.innerHTML = "<p>No videos added yet.</p>";
-        return;
-      }
-
-      videosContainer.innerHTML = "";
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const div = document.createElement("div");
-        div.classList.add("video-item");
-        div.innerHTML = `<strong>${data.title}</strong> [${data.category}]<br/><a href="${data.videoUrl}" target="_blank">${data.videoUrl}</a>`;
-        videosContainer.appendChild(div);
-      });
-    } catch (err) {
-      videosContainer.innerHTML = "<p>Error loading videos.</p>";
-      console.error(err);
-    }
+    videosContainer.innerHTML = "";
+    snapshot.forEach(docSnap => {
+      const data = docSnap.data();
+      const div = document.createElement("div");
+      div.className = "video-item";
+      div.innerHTML = `
+        <strong>${data.title}</strong> [${data.category}]<br/>
+        <a href="${data.videoUrl}" target="_blank">${data.videoUrl}</a><br/>
+        <button onclick="deleteVideo('${docSnap.id}')">Delete</button>
+      `;
+      videosContainer.appendChild(div);
+    });
   }
 
-  // Add video on form submit
-  videoForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const title = videoForm.title.value.trim();
-    const category = videoForm.category.value;
-    const videoUrl = videoForm.videoUrl.value.trim();
-
-    if (!title || !category || !videoUrl) {
-      alert("সব ফিল্ড পূরণ করো ভাই!");
-      return;
-    }
-
-    try {
-      await addDoc(collection(db, "videos"), {
-        title,
-        category,
-        videoUrl,
-        createdAt: serverTimestamp()
-      });
-      alert("ভিডিও সফলভাবে অ্যাড হয়েছে!");
-      videoForm.reset();
+  window.deleteVideo = async (id) => {
+    if (confirm("Delete this video?")) {
+      await deleteDoc(doc(db, "videos", id));
       loadVideos();
-    } catch (error) {
-      alert("ভিডিও অ্যাড করতে সমস্যা হয়েছে: " + error.message);
     }
-  });
+  };
 </script>
 
 </body>
