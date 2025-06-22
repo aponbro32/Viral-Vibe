@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Viral Vibe</title>
+</head>
+<body style="font-family:sans-serif;text-align:center;background:#f2f2f2;padding:20px">
+  <h1>📺 Viral Vibe</h1>
+  <input type="text" placeholder="🔍 Search video..." onkeyup="search()" id="search" />
+  <div id="videoList">
+    <div class="video" data-category="Drama">
+      <h3>Sample Drama Video</h3>
+      <iframe width="300" height="200" src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
+      <br />
+      <a href="https://t.me/viralvibe3" target="_blank"><button>Join Now</button></a>
+    </div>
+  </div>
+  <script>
+    function search() {
+      const input = document.getElementById('search').value.toLowerCase();
+      const videos = document.querySelectorAll('.video');
+      videos.forEach(v => {
+        v.style.display = v.textContent.toLowerCase().includes(input) ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
